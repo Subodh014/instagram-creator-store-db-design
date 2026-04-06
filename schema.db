@@ -1,0 +1,78 @@
+title instagram thrift creater store 
+
+customers [icon: user] {
+  id serial pk
+  name varchar(100) not null
+  email varchar(100) not null
+  phone varchar(15)
+  address text
+
+  created_at timestamp
+}
+
+orders [icon: shopping-cart] {
+  id serial pk
+  customer_id text fk
+  status text
+  total decimal
+
+  created_at timestamp
+}
+
+order_items [icon: package] {
+  id serial pk
+  order_id text fk
+  product_id int fk
+  quantity int
+
+  price decimal
+
+  created_at timestamp
+}
+
+products [icon: box] {
+  id serial pk
+  category_id text fk
+  description text
+  name text
+  price decimal
+  brand text
+  size varchar(20)
+  color varchar(30
+  is_available boolean default true
+   
+  created_at timestamp
+
+}
+
+shipping[icon: shipping]{
+  id serial pk
+  order_id int
+  curior_id  int fk
+  tracking_id varchar(25) 
+  shipped_date shipped_date
+  delivery_status enum[shipped, out_for_delivery, deliverd]
+  
+}
+
+payment [icon: payment]{
+  id serial pk 
+  order_id int fk
+  paid_amount decimal
+  payment_method emun[razorpay,upi,cod]
+  payment_date date
+  payment_status enum[paid, failed, pending]
+
+  }
+
+inventory [icon: inventory]{
+ id serial pk 
+ product_quantity int 
+ product_idint fk
+}
+customers.id < orders.customer_id
+orders.id < order_items.order_id
+products.id < order_items.product_id
+order_items.id < payment.id
+payment.id - shipping.id
+products.id - inventory.id
